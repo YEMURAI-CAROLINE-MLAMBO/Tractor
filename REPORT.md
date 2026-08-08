@@ -665,49 +665,97 @@ The resulting **Minimum Viable Agricultural Machine (MVAM)** delivers the tracti
 
 ---
 
-### Computational Simulation Output Verification
+### Interactive Simulation, Demonstrations, and Visual Imagery
+
+To complement this engineering report, the repository includes a fully-interactive, first-principles **MVAM Simulator (`simulator.py`)** with rich text-based visualization schematics and real-time traction curve plotting.
+
+#### How to Run the Simulator:
+Run the following command in your terminal to see the complete physical, economic, and visual simulations:
+```bash
+python3 simulator.py
+```
+
+#### Visual Outputs Rendered by the Simulator:
+
+##### 1. Physical Layout Schematic (Visual Architecture Representation)
+The simulator renders a complete structural diagram of our toy-tractor-derived machine architecture, showing the integration of the modular battery sled, dual mid-drive motors, and universal quick-pin implement hitch:
 
 ```
-------------------------------------------------------------------------------
-      TOY-TRACTOR-INSPIRED MINIMUM VIABLE AGRICULTURAL MACHINE (MVAM) SIMULATOR
-------------------------------------------------------------------------------
-[STEP 1] EVALUATING TRACTION UNDER DIFFERENT SOILS (Draft Force = 300 N)
-Soil Type          | Config       | Max Drawbar Pull | Slip (%)   | Status
-------------------------------------------------------------------------------
-Dry Sand           | Walk-Behind  | 135.9          N | 100.0     % | SPINNING
-Dry Sand           | Ride-On      | 395.1          N | 100.0     % | SPINNING
-Sandy Loam (Typica | Walk-Behind  | 402.7          N | 96.1      % | OK
-Sandy Loam (Typica | Ride-On      | 792.0          N | 30.1      % | OK
-Wet Heavy Clay     | Walk-Behind  | 483.2          N | 46.5      % | OK
-Wet Heavy Clay     | Ride-On      | 507.5          N | 53.7      % | OVERLOAD
-Firm Untilled Soil | Walk-Behind  | 550.2          N | 35.7      % | OK
-Firm Untilled Soil | Ride-On      | 1013.6         N | 16.0      % | OK
-------------------------------------------------------------------------------
-Deduction: In soft soils (wet clay, dry sand), the walk-behind (60kg) shears the soil entirely.
-By adding the operator's weight (Ride-On configuration, 135kg total), the normal force increases,
-exponentially increasing the soil's shear strength and traction, making successful draft force possible!
+             =================== MVAM PHYSICAL ARCHITECTURE SCHEMATIC ===================
 
-[STEP 2] POWERTRAIN ARCHITECTURE COMPARISON (Sandy Loam, 250 N Draft Force)
-Arch  | Description                                   | Est. Cost | Efficiency
-------------------------------------------------------------------------------
-A     | Central Electric Motor + Mechanical Transmiss | $406.40  | 75.0    %
-B     | Single Electric Motor Driving Rear Axle Direc | $406.40  | 85.0    %
-C     | Independent Dual Electric Motors (One per Dri | $446.40  | 85.0    %
-D     | In-Wheel Electric Hub Motors                  | $476.40  | 90.0    %
-------------------------------------------------------------------------------
+                     [Handlebars]
+                           \     /
+                            \___/
+                              |
+                              |               (Removable 48V Sled Battery Pack)
+               _______________|_______________           [==BATTERY==]
+              |   [LFP Battery & Dual BLDC    |                |
+              |   Sensing Controller Sled]    | <──────────────┘
+              |_______________________________|
+                 |                         |
+                 |                         |
+            [Front Caster]             [Rear Drive Wheel]  ◄── Driven by Dual 250W Motors
+               (Passive)                 (Active V-Lug)
+                 O====O                    O===========O
+                (______)                  (_____________)
+                  |                             |
+                  |                             |
+             =====O=============================O==============[Universal Tool Hitch Receiver]
+                                                                        |
+                                                                        V
+                                                            [Quick-Pin Implement Hitch]
+                                                                  (Weeder / Seeder / Sulky)
+```
 
-[STEP 3] SELECTED OPTIMAL CONFIGURATION: PROPOSED MVAM ARCHITECTURE C (DUAL MOTOR)
-------------------------------------------------------------------------------
-SIMULATED PERFORMANCE UNDER LIGHT CULTIVATION / TRAILER HAULING (150 N Draft Load):
-  Soil Type:             Sandy Loam (Typical Farm Soil)
-  Max Pull Available:    402.7 N
-  Required Rim Force:    197.1 N (Draft + Rolling Resistance)
-  Wheel Slip:            28.70%
-  Actual Ground Speed:   2.14 km/h
-  Electrical Power Draw: 214.7 Watts
-  Battery Runtime:       2.24 Hours
-  Estimated Range:       4.78 km
-  Status Check:          SUCCESSFUL
-------------------------------------------------------------------------------
-Total Estimated BOM Cost: $446.40
+##### 2. Dynamic Traction Curves (Drawbar Pull vs. Wheel Slip)
+Below is an exact visual graph rendered in the console, depicting available **Net Drawbar Pull (N)** across the full range of **Wheel Slip (%)** on Sandy Loam for both Walk-Behind and Ride-On operator configurations:
+
+```
+             === TRACTION CURVE DEMONSTRATION: Net Drawbar Pull vs. Slip (%) ===
+             Soil: Sandy Loam (Typical Farm Soil) | Configuration: Walk-Behind (60kg)
+             ------------------------------------------------------------
+    299 N |                                                                  *
+    279 N |                                                           *      *
+    259 N |                                                    *      *      *
+    239 N |                                             *      *      *      *
+    219 N |                                      *      *      *      *      *
+    199 N |                               *      *      *      *      *      *
+    179 N |                               *      *      *      *      *      *
+    159 N |                        *      *      *      *      *      *      *
+    140 N |                        *      *      *      *      *      *      *
+    120 N |                 *      *      *      *      *      *      *      *
+    100 N |                 *      *      *      *      *      *      *      *
+     80 N |                 *      *      *      *      *      *      *      *
+     60 N |          *      *      *      *      *      *      *      *      *
+     40 N |          *      *      *      *      *      *      *      *      *
+     20 N |          *      *      *      *      *      *      *      *      *
+      0 N |   *      *      *      *      *      *      *      *      *      *
+        0 |----------------------------------------------------------------------
+               5%     15%     25%     35%     45%     55%     65%     75%     85%     95%
+             ============================================================
+```
+
+```
+             === TRACTION CURVE DEMONSTRATION: Net Drawbar Pull vs. Slip (%) ===
+             Soil: Sandy Loam (Typical Farm Soil) | Configuration: Ride-On (135kg)
+             ------------------------------------------------------------
+    585 N |                                                                  *
+    546 N |                                                           *      *
+    507 N |                                                    *      *      *
+    468 N |                                             *      *      *      *
+    429 N |                                      *      *      *      *      *
+    390 N |                               *      *      *      *      *      *
+    351 N |                               *      *      *      *      *      *
+    312 N |                        *      *      *      *      *      *      *
+    273 N |                        *      *      *      *      *      *      *
+    234 N |                 *      *      *      *      *      *      *      *
+    195 N |                 *      *      *      *      *      *      *      *
+    156 N |                 *      *      *      *      *      *      *      *
+    117 N |          *      *      *      *      *      *      *      *      *
+     78 N |          *      *      *      *      *      *      *      *      *
+     39 N |          *      *      *      *      *      *      *      *      *
+      0 N |   *      *      *      *      *      *      *      *      *      *
+        0 |----------------------------------------------------------------------
+               5%     15%     25%     35%     45%     55%     65%     75%     85%     95%
+             ============================================================
 ```

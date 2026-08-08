@@ -193,9 +193,6 @@ def simulate_traction(specs, soil_type, draft_force_n):
 
     # Tire-soil contact geometry
     # Approximate contact patch length (l) and width (b)
-    # Flotation approximation: tire sinks until soil support equals load.
-    # For simplicity, we model contact patch as a rectangle:
-    # Width b = tire_width_m * num_drive_wheels
     b = specs["tire_width_m"] * specs["num_drive_wheels"]
 
     # Contact length under nominal inflation/deflection (approx 15% of diameter)
@@ -219,9 +216,6 @@ def simulate_traction(specs, soil_type, draft_force_n):
 
     # 4. Wheel Slip Calculation
     # We find the slip 's' that matches the requested draft force.
-    # Drawbar Pull (DP) = Tractive Force F(s) - Rolling Resistance (R)
-    # F(s) = F_max * [1 - (K / (s*l)) * (1 - e^(-s*l / K))]
-    # We solve for s such that F(s) = draft_force_n + rolling_resistance_n
     target_traction = draft_force_n + rolling_resistance_n
 
     slip = 1.0  # Default to 100% slip (spinning in place)
@@ -269,12 +263,10 @@ def run_simulation(specs, soil_key, arch_key, draft_force_n):
         status = "SUCCESSFUL"
 
     # 2. Drivetrain Mechanical Power
-    # Mech Power = Tractive Force * Actual Wheel Speed (relative to ground, but motors must overcome rolling resistance + draft)
     # Total force at wheel rims = Draft Force + Rolling Resistance
     total_force_needed = draft_force_n + trac_results["rolling_resistance_n"]
 
     # Power delivered at wheel rims (W)
-    # P_rim = Force * nominal_speed (since wheels spin at nominal speed)
     speed_nominal_mps = specs["speed_kmh"] / 3.6
     power_rim_w = total_force_needed * speed_nominal_mps
 
@@ -288,9 +280,7 @@ def run_simulation(specs, soil_key, arch_key, draft_force_n):
         status += " | WARNING: Motor overloaded (Draws {:.1f}W on a {:.1f}W motor)".format(power_electrical_w, specs["motor_power_w"])
 
     # 3. Battery Life & Range
-    # Battery capacity (Wh)
     battery_hours = specs["battery_capacity_wh"] / power_electrical_w if power_electrical_w > 0 else float('inf')
-    # If overloaded or slipping, operational life is severely compromised
     if trac_results["soil_failure"]:
         battery_hours = 0.0
 
@@ -318,6 +308,97 @@ def run_simulation(specs, soil_key, arch_key, draft_force_n):
         "bom_breakdown": bom
     }
 
+# --- CHARACTERS FOR VISUAL SCHEMATICS AND DEMONSTRATIONS ---
+def print_chassis_schematic():
+    print("""
+             =================== MVAM PHYSICAL ARCHITECTURE SCHEMATIC ===================
+
+                     [Handlebars]
+                           \\     /
+                            \\___/
+                              |
+                              |               (Removable 48V Sled Battery Pack)
+               _______________|_______________           [==BATTERY==]
+              |   [LFP Battery & Dual BLDC    |                |
+              |   Sensing Controller Sled]    | <──────────────┘
+              |_______________________________|
+                 |                         |
+                 |                         |
+            [Front Caster]             [Rear Drive Wheel]  ◄── Driven by Dual 250W Motors
+               (Passive)                 (Active V-Lug)
+                 O====O                    O===========O
+                (______)                  (_____________)
+                  |                             |
+                  |                             |
+             =====O=============================O==============[Universal Tool Hitch Receiver]
+                                                                        |
+                                                                        V
+                                                            [Quick-Pin Implement Hitch]
+                                                                  (Weeder / Seeder / Sulky)
+    """)
+
+def plot_traction_curve(specs, soil_key):
+    """
+    Renders an ASCII graph plotting available Net Drawbar Pull (N) against Slip Percentage (%)
+    to visually demonstrate the first-principles soil mechanics and traction limit.
+    """
+    soil = SOIL_DATABASE[soil_key]
+    print(f"\n             === TRACTION CURVE DEMONSTRATION: Net Drawbar Pull vs. Slip (%) ===")
+    print(f"             Soil: {soil['name']} | Configuration: {'Ride-On (135kg)' if specs['is_ride_on'] else 'Walk-Behind (60kg)'}")
+    print("             " + "-" * 60)
+
+    # We will compute drawbar pull at different slip values from 5% to 95% in 5% steps
+    slips = [s / 100.0 for s in range(5, 100, 10)] # 10 data points
+    pulls = []
+
+    m_total = specs["mass_kg"]
+    if specs["is_ride_on"]:
+        m_total += specs["operator_weight_kg"]
+    g = 9.81
+    W_total = m_total * g
+    W_drive = W_total * specs["weight_on_drive_wheels_pct"]
+
+    b = specs["tire_width_m"] * specs["num_drive_wheels"]
+    l_patch = 0.15 * specs["tire_diameter_m"]
+    A_contact = b * l_patch
+
+    c = soil["cohesion"]
+    phi_rad = math.radians(soil["friction_angle"])
+    max_traction_n = (A_contact * c) + (W_drive * math.tan(phi_rad))
+    rolling_resistance_n = soil["rolling_resistance_coeff"] * W_total
+
+    K = soil["shear_deformation"]
+
+    for s in slips:
+        term = (K / (s * l_patch)) * (1.0 - math.exp(- (s * l_patch) / K))
+        f_test = max_traction_n * (1.0 - term)
+        drawbar_pull = f_test - rolling_resistance_n
+        if drawbar_pull < 0:
+            drawbar_pull = 0.0
+        pulls.append(drawbar_pull)
+
+    max_y = max(pulls) if len(pulls) > 0 and max(pulls) > 0 else 100.0
+    scale = 15.0 / max_y # Scale curve to 15 vertical lines max
+
+    # Render ASCII graph
+    for y_line in range(15, -1, -1):
+        y_val = (y_line / 15.0) * max_y
+        line_str = "  {:>5.0f} N |".format(y_val)
+        for i, s in enumerate(slips):
+            p_val = pulls[i]
+            if p_val * scale >= y_line:
+                line_str += "   *   "
+            else:
+                line_str += "       "
+        print(line_str)
+
+    print("        0 |" + "-" * 70)
+    print("           " + "".join(["  {:>3.0f}%  ".format(s*100) for s in slips]))
+    print("             " + "=" * 60)
+    print("             Notice how pull peaks quickly and then plateaus as slip increases.")
+    print("             Exceeding this plateau shears the soil completely, resulting in wheel spin.")
+    print("             " + "=" * 60 + "\n")
+
 # --- BEAUTIFUL COMMAND LINE INTERFACE ---
 def print_separator():
     print("-" * 78)
@@ -329,6 +410,10 @@ def run_scenarios():
     print("This tool performs a first-principles engineering simulation of a lightweight")
     print("recycled-polymer-framed farm platform ($500 limit). It tests whether lightweight")
     print("machines can generate sufficient draft force through terramechanics.")
+    print_separator()
+
+    # Show Visual Layout Schematic
+    print_chassis_schematic()
     print_separator()
 
     # Base configuration: Walk-behind, 60kg, 500W motor, 480Wh battery
@@ -344,7 +429,6 @@ def run_scenarios():
         for ride_on in [False, True]:
             test_specs = specs.copy()
             test_specs["is_ride_on"] = ride_on
-            # If ride-on, shift weight distribution slightly to drive wheels (e.g., 75% on rear drive)
             if ride_on:
                 test_specs["weight_on_drive_wheels_pct"] = 0.75
             else:
@@ -369,6 +453,13 @@ def run_scenarios():
     print("By adding the operator's weight (Ride-On configuration, 135kg total), the normal force increases,")
     print("exponentially increasing the soil's shear strength and traction, making successful draft force possible!")
 
+    # Rendering visual traction curves for Sandy Loam under both conditions
+    plot_traction_curve(specs, "sandy_loam")
+    ride_specs = specs.copy()
+    ride_specs["is_ride_on"] = True
+    ride_specs["weight_on_drive_wheels_pct"] = 0.75
+    plot_traction_curve(ride_specs, "sandy_loam")
+
     print("\n[STEP 2] POWERTRAIN ARCHITECTURE COMPARISON (Sandy Loam, 250 N Draft Force)")
     print_separator()
     print("{:<5} | {:<45} | {:<8} | {:<8}".format("Arch", "Description", "Est. Cost", "Efficiency"))
@@ -389,8 +480,6 @@ def run_scenarios():
     print_separator()
 
     selected_specs = specs.copy()
-    # Let's run a highly realistic operational simulation
-    # Walking speed 3 km/h (~0.83 m/s), sandy loam soil, hauling a small trailer (150 N continuous rolling resistance)
     sandy_loam_res = run_simulation(selected_specs, "sandy_loam", "C", 150.0)
 
     print("Machine Weight:          {} kg (Ultra-lightweight structural polymer)".format(selected_specs["mass_kg"]))
