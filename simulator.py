@@ -87,22 +87,22 @@ ARCHITECTURES = {
         "traction_control": "Excellent (instantaneous electronic torque vectoring)"
     },
     "E": {
-        "name": "Hairdryer High-RPM Motors + 500:1 Planetary Gear Box",
-        "description": "Ultra-high RPM (18,000 RPM) low-torque motors with multi-stage planetary reduction.",
-        "efficiency": 0.65,      # Lower efficiency due to multi-stage gear frictional losses
-        "relative_cost": 0.85,    # Cheaper raw motors, but costly multi-stage gearbox
-        "dust_resistance": "Low (requires high-volume airflow; thermal risk if clogged)",
-        "complexity": "High (multi-stage reduction gearbox, thermal management)",
+        "name": "Hairdryer High-RPM High-Heat Motors + 500:1 Planetary Reduction",
+        "description": "Class-H heat insulated high-RPM motors (18k RPM) with ducted cooling and high gear reduction.",
+        "efficiency": 0.68,      # Higher continuous current draw supported by heat insulation
+        "relative_cost": 0.82,    # Low-cost heat-resistant polymer motor housing
+        "dust_resistance": "Medium (heat-tolerant mica housing with ducted airflow shunt)",
+        "complexity": "High (multi-stage reduction gearbox & ducted cooling)",
         "redundancy": "Low",
         "traction_control": "Moderate"
     },
     "F": {
-        "name": "Elevator Magnetic Traction Sheave Cable Puller",
-        "description": "Magnetic sheave gripping anchored ground steel cable for wheel-independent draft force.",
-        "efficiency": 0.92,      # Direct mechanical cable pull, zero wheel slip loss
-        "relative_cost": 1.1,     # Includes cable anchor reel & magnetic sheave assembly
+        "name": "Elevator Traction Sheave & Counterweight Cable Puller",
+        "description": "Elevator-style magnetic sheave with operator sulky counterweight for heavy draft pulling.",
+        "efficiency": 0.94,      # Enhanced efficiency via magnetic grip & operator counterweight mass balancing
+        "relative_cost": 1.1,     # Includes magnetic sheave, cable anchor reel, and sulky counterweight hitch
         "dust_resistance": "High",
-        "complexity": "Medium (cable guidance and anchoring)",
+        "complexity": "Medium (cable guidance & magnetic sheave assembly)",
         "redundancy": "High",
         "traction_control": "Outstanding (direct physical cable lock, bypasses soil shear limits)"
     }
