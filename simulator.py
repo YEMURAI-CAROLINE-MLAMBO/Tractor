@@ -105,6 +105,16 @@ ARCHITECTURES = {
         "complexity": "Medium (cable guidance & magnetic sheave assembly)",
         "redundancy": "High",
         "traction_control": "Outstanding (direct physical cable lock, bypasses soil shear limits)"
+    },
+    "G": {
+        "name": "Standing Electric Scooter / Skateboard Platform Deck",
+        "description": "Compact standing-deck platform minimizing vehicle footprint and eliminating walking labor.",
+        "efficiency": 0.88,      # Direct drive to wheels with 100% standing operator weight over drive axle
+        "relative_cost": 0.85,    # Compact chassis deck using e-scooter/skate supply chain
+        "dust_resistance": "High (sealed deck and enclosed wiring)",
+        "complexity": "Low (simple standing deck, handlebars with thumb throttle)",
+        "redundancy": "High",
+        "traction_control": "Excellent (standing weight transfer + electronic differential)"
     }
 }
 
@@ -138,6 +148,8 @@ def get_bom_cost(specs, arch_key):
         motor_cost = 65.0  # Ultra-cheap high-RPM motor ($15) + complex 500:1 planetary box ($50)
     elif arch_key == "F":
         motor_cost = 95.0  # Motor + magnetic sheave drum + steel cable guidance
+    elif arch_key == "G":
+        motor_cost = 75.0  # Dual 250W e-scooter/skate hub or mid-drive motors
     else:  # Architecture D
         motor_cost = 110.0 # Two specialized low-speed high-torque 250W hub motors ($55 each)
 
