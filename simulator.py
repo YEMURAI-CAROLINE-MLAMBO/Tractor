@@ -128,7 +128,8 @@ DEFAULT_SPECS = {
     "tire_diameter_m": 0.45,        # Larger diameter for rolling over obstacles
     "num_drive_wheels": 2,          # 2-wheel drive standard
     "motor_power_w": 500.0,         # Mass-produced e-bike motor class (48V)
-    "battery_capacity_wh": 480.0,   # e.g., 48V 10Ah Lithium-ion battery
+    "battery_capacity_wh": 960.0,   # Dual hot-swappable 48V 10Ah LFP battery sleds (480Wh x 2) for full workday labor
+    "solar_charging_watts": 150.0,  # 150W-200W solar canopy trailer trickle charging assistance
     "system_voltage": 48.0,         # 48V system
     "speed_kmh": 3.0,               # Nominal operating speed (~0.83 m/s), matching brisk walking or ox-speed
     "target_cost_limit": 500.0      # $500 USD hard budget
@@ -329,8 +330,10 @@ def run_simulation(specs, soil_key, arch_key, draft_force_n):
         motor_overloaded = True
         status += " | WARNING: Motor overloaded (Draws {:.1f}W on a {:.1f}W motor)".format(power_electrical_w, specs["motor_power_w"])
 
-    # 3. Battery Life & Range
-    battery_hours = specs["battery_capacity_wh"] / power_electrical_w if power_electrical_w > 0 else float('inf')
+    # 3. Battery Life & Range (accounting for dual hot-swappable packs + solar trailer trickle charge)
+    solar_watts = specs.get("solar_charging_watts", 0.0)
+    net_power_draw = max(10.0, power_electrical_w - solar_watts) # Effective draw with solar trickle assistance
+    battery_hours = specs["battery_capacity_wh"] / net_power_draw if net_power_draw > 0 else float('inf')
     if trac_results["soil_failure"]:
         battery_hours = 0.0
 

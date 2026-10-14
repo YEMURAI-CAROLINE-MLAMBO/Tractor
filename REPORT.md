@@ -394,7 +394,7 @@ The MVAM is optimized for complete single-person management, avoiding complex me
 *   **Tetherless Handlebar Interface:** Simple bicycle-style handlebars with a variable thumb throttle, mechanical brake lever, and emergency magnetic wrist-tether "kill switch."
 *   **Quick-Attach Tool Carrier:** A universal sleeve-hitch receiver. Implements are built with a matching tongue that slides into the sleeve. The operator inserts a single heavy-duty steel pin and secures it with a linchpin. **Zero tools required.**
 *   **Balance & Ground Pivot Point:** Axle placement is located precisely under the center of mass of the walk-behind power platform. This allows the operator to pivot the entire machine $180^\circ$ at the end of a row with less than $5 \text{ kg}$ of lifting force on the handlebars.
-*   **Universal Battery Sled:** Slipped in and locked with a simple toolless latch. Allows hot-swapping batteries in under 30 seconds, enabling continuous operation while a spare battery charges via a homestead solar panel.
+*   **Dual Hot-Swappable Battery Sled & Solar Canopy System:** To achieve a realistic **8–10 hour continuous full-workday capability** (overcoming the limitations of a single 2-hour battery pack), the MVAM utilizes a **dual 48V 10Ah LFP battery sled architecture (960 Wh combined storage)** paired with an optional **200W solar micro-grid canopy trailer**. While Pack A powers the drive motors in the field, Pack B charges on the solar trailer or homestead charger, enabling hot-swaps in under 30 seconds.
 
 ---
 
@@ -608,7 +608,7 @@ Our analysis converges on this final design specification. We separate known eng
 *   **Approximate Dimensions:** Length: $1.20 \text{ m}$ (excluding handlebars), Width: $0.75 \text{ m}$ (matches standard crop row spacing), Height: $0.90 \text{ m}$ (at handlebars).
 *   **Approximate Mass:** $60 \text{ kg}$ (base machine without operator); $135 \text{ kg}$ with operator in Ride-On Sulky mode.
 *   **Motor Power Range:** Dual Brushless DC (BLDC) mid-drive motors, nominal power of $250 \text{ W}$ each ($500 \text{ W}$ total continuous), peak power up to $1,000 \text{ W}$ combined.
-*   **Battery Capacity Range:** $48 \text{ V}$, $10 \text{ Ah}$ Lithium Iron Phosphate (LFP) pack ($480 \text{ Wh}$).
+*   **Battery Capacity Range:** Dual hot-swappable $48 \text{ V}$, $10 \text{ Ah}$ Lithium Iron Phosphate (LFP) sleds ($960 \text{ Wh}$ combined total storage), expandable with a $200 \text{ W}$ trailer-mounted solar canopy for continuous 8–10+ hour workday operation.
 *   **Expected Operating Speed:** $3.0 \text{ km/h}$ nominal ($0.83 \text{ m/s}$), variable from $1.0\text{–}5.0 \text{ km/h}$.
 *   **Expected Pulling Capability:** Continuous drawbar pull of **$200\text{ N}$** in walk-behind mode; **$400\text{ N}$** continuous in ride-on sulky mode (sandy loam). Peak pull up to **$700\text{ N}$** before complete soil failure.
 *   **Wheel Configuration:** 4-wheel base: Dual front passive casters, dual rear active drive wheels.
