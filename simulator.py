@@ -164,8 +164,11 @@ def get_bom_cost(specs, arch_key):
     battery_cost = specs["battery_capacity_wh"] * 0.18
 
     # Wheels & Tires
-    # 2 large drive wheels with agricultural tread, 2 smaller front casters/wheels
-    wheel_cost = 55.0
+    # Option for pneumatic rubber ($55) or locally fabricated small steel lugged wheels ($25)
+    if specs.get("use_steel_lug_wheels", False):
+        wheel_cost = 25.0
+    else:
+        wheel_cost = 55.0
 
     # Axles, Hubs, Bearings (using standard high-volume mechanical components)
     axle_cost = 30.0
@@ -235,11 +238,16 @@ def simulate_traction(specs, soil_type, draft_force_n):
     l_patch = 0.15 * specs["tire_diameter_m"]
     A_contact = b * l_patch # Total contact area in m^2
 
+    # Steel lug wheel bonus: extra mechanical cleat penetration shear area
+    cleat_shear_bonus = 0.0
+    if specs.get("use_steel_lug_wheels", False):
+        cleat_shear_bonus = 120.0 # Newtons of additional mechanical soil lock from steel lugs
+
     # 1. Maximum Soil Shear Force (Mohr-Coulomb limit)
-    # F_max = A*c + W_drive*tan(phi)
+    # F_max = A*c + W_drive*tan(phi) + cleat_bonus
     c = soil["cohesion"]
     phi_rad = math.radians(soil["friction_angle"])
-    max_traction_n = (A_contact * c) + (W_drive * math.tan(phi_rad))
+    max_traction_n = (A_contact * c) + (W_drive * math.tan(phi_rad)) + cleat_shear_bonus
 
     # 2. Rolling Resistance
     # R = f_r * W_total

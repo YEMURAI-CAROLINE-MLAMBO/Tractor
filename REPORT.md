@@ -317,13 +317,24 @@ To achieve the $500 target, we avoid traditional sheet metal and cast iron, repl
 *   **Materials:** **Medium-Carbon Steel (AISI 1045)** or **Structural Mild Steel (A36)**.
 *   **Justification:** Polymers creep and shear under continuous high torsional stresses. To transfer $150\text{ Nm}$ of torque to the wheels, the drive shaft must be steel to prevent immediate plastic failure. Bearings must be hardened steel to prevent abrasive wear from dust and soil.
 
-### 5.2 Materials Matrix
+### 5.2 Small Steel Cleated/Lugged Wheels Analysis
 
-| Polymer Type | Mechanical Properties | Component Fit | Processing Method |
+In addition to composite polymer and rubber tires, **small steel cleated/lugged wheels** (300–400 mm diameter) offer a compelling high-traction, ultra-durable alternative for rural farming:
+
+* **Traction & Cleat Penetration Mechanics:** Steel wheels equipped with welded angle-iron lugs penetrate loose topsoil to lock directly into consolidated subsoil layers. The effective soil contact area increases through deep cleat engagement ($h_{\text{cleat}} = 30\text{–}50\text{ mm}$), preventing surface rim slippage:
+  $$F_{\text{steel\_max}} = A_{\text{contact}} \cdot c + W_{\text{drive}} \cdot \tan(\phi) + N_{\text{cleats}} \cdot A_{\text{cleat}} \cdot c$$
+* **Zero Puncture & Maintenance Risk:** Unlike pneumatic rubber tires, steel wheels cannot puncture on thorns, sharp rocks, or debris, eliminating maintenance downtime in remote fields.
+* **Extreme Low Cost:** Fabricated locally out of bent steel strip rim bands and welded angle-iron scrap lugs, a pair costs under **$20–$25 USD** to produce in local blacksmith shops.
+* **Transport Considerations:** Steel lugged wheels cause road vibration on asphalt/paved paths; hence, they can be designed with quick-release snap-on rubber/HDPE tread transport rings for road transit.
+
+### 5.3 Materials Matrix
+
+| Material Type | Mechanical Properties | Component Fit | Processing Method |
 | :--- | :--- | :--- | :--- |
 | **Recycled HDPE** | High impact strength, flexible, low friction, density ~0.95 g/cm³. | Mudguards, under-body skid plates, battery box. | Shredded, melted, and compression molded in local ovens. |
 | **Recycled PET** | High tensile strength (~60 MPa), rigid, high melting point ($250^\circ\text{C}$). | Structural frame panels, bracket supports. | Natural fiber reinforced hot-pressing. |
 | **Recycled PP** | Outstanding fatigue resistance, chemical-inert. | Control housings, wiring conduits, hinges. | Simple low-pressure extrusion. |
+| **Welded Steel (A36)** | High yield strength (~250 MPa), rigid, weldable. | Small cleated lug wheels, axles, sleeve-hitch. | Local cutting, bending, and arc welding. |
 
 ---
 
@@ -474,7 +485,29 @@ The ox is not our physical design inspiration (we are building a toy-tractor-der
 *   **Peak Draft Capability:** Can generate up to **$1,500\text{–}2,000\text{ N}$** for short bursts (under 10 seconds) to pull past a heavy tree root or clay pocket.
 *   **Work Output:** An ox operates for approximately 5 to 6 hours per day before requiring rest, feeding, and water.
 
-### 10.2 MVAM vs. Ox Comparison & Sizing
+### 10.2 Cow & Yoke Structural Adaptation Mechanics
+
+Traditional animal draft relies on a wooden **yoke and harness** fitted over the neck/shoulders of an ox or cow, transmitting pull force through dual traces or a central draft pole. We adapt this exact structural pulling geometry into our electric MVAM platform:
+
+```
+       [ ADAPTED COW & YOKE DRAFT FRAME ARCHITECTURE ]
+
+       ┌──────────────────────────────────────────────────┐
+       │ Electric MVAM Platform (or Ox Yoke Frame)        │
+       └───────────────┬──────────────────────────────────┘
+                       │
+                       │ Low-Slung Pull Vector (θ ≈ 15°)
+                       ▼
+        ═══════════════════════════════════ ◄── Dual Draft Traces / Pull Frame
+                       │
+                       ▼
+            [Implement / Plow Blade]
+```
+
+* **Low Line-of-Draft Angle ($\theta \approx 10\text{–}15^\circ$):** Like a cow yoke structure, positioning the hitch point low to the ground ensures the pull force vector has a favorable horizontal component ($F_{\text{draft}} \cos\theta$) while creating a downward vertical force vector ($F_{\text{draft}} \sin\theta$) that presses the MVAM's drive wheels directly into the soil during heavy pulls.
+* **Dual-Trace Hitch Adaptation:** Implementing a dual-trace yoke frame allows instant coupling of traditional animal-drawn implements (moldboard plows, ridgers, harrows) directly to the MVAM without needing expensive hydraulic or 3-point lift arms.
+
+### 10.3 MVAM vs. Ox Comparison & Sizing
 To match a single ox, an agricultural machine must continuously deliver **$500\text{ N}$** of pulling force at **$0.83 \text{ m/s}$**.
 *   **Power Calculation:**
 
