@@ -728,6 +728,55 @@ The resulting **Minimum Viable Agricultural Machine (MVAM)** delivers the tracti
 
 ---
 
+## 14. MVAM System Technical Stack Architecture
+
+To transition the MVAM from theoretical investigation to production, we establish a standardized **Multi-Disciplinary Technical Stack**. The stack spans power electronics, embedded firmware, mechanical structures, local manufacturing, and simulation software.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    MVAM MULTI-DISCIPLINARY TECH STACK                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│ 5. SOFTWARE & SIMULATION │ Python 3 Terramechanics, Open-Source CAD/CAM│
+├──────────────────────────┼──────────────────────────────────────────────┤
+│ 4. EMBEDDED CONTROL      │ ESP32/STM32 32-bit MCU, FreeRTOS, Hall-Sens  │
+├──────────────────────────┼──────────────────────────────────────────────┤
+│ 3. POWER & ENERGY        │ 48V LFP 960Wh Sleds, 15S BMS, 200W Solar     │
+├──────────────────────────┼──────────────────────────────────────────────┤
+│ 2. DRIVETRAIN & ACTUATION│ Dual 250W BLDC Motors, 15:1 Sprockets, Lugs  │
+├──────────────────────────┼──────────────────────────────────────────────┤
+│ 1. MECHANICAL & MATERIALS│ Compressed Recycled HDPE, Welded Steel Frame │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### 14.1 Layer 1: Mechanical Structures & Sustainable Materials
+* **Chassis Framework:** Hybrid structural space-frame built from welded $25\text{ mm} \times 25\text{ mm} \times 1.5\text{ mm}$ mild steel (A36) tubing.
+* **Body Panels & Skid Plates:** Local compression-molded post-consumer recycled HDPE/PP sandwich panels ($10\text{ mm}$ thickness) formed via open-source "Precious Plastic" heat presses.
+* **Traction Wheels:** Interchangeable standard pneumatic agricultural flotation tires ($450\text{ mm}$ diameter) OR locally welded small steel cleated lug wheels ($350\text{ mm}$ diameter, $A36$ angle-iron lugs) for zero puncture risk.
+* **Hitch & Hitching Geometry:** Universal rear steel sleeve-hitch with manual height lever lock, plus low-slung cow & yoke draft frame coupling ($\theta \approx 10\text{–}15^\circ$).
+
+### 14.2 Layer 2: Drivetrain & Rotary Actuation
+* **Tractive Motors:** Dual $250\text{ W}$ continuous ($1,000\text{ W}$ peak combined) $48\text{ V}$ Brushless DC (BLDC) mid-drive or hub motors sourced from micromobility supply chains.
+* **Mechanical Reduction:** Dual-stage heavy-duty steel bicycle/motorcycle chain drive ($15:1$ fixed gear ratio) yielding $35\text{ RPM}$ wheel speed at $3.0\text{ km/h}$.
+* **Auxiliary Power Pods:** Class-H insulated high-RPM hairdryer motor assemblies with 500:1 planetary reduction and ducted cooling shunts for forced-air cooling blowers and seed metering.
+
+### 14.3 Layer 3: Power Electronics & Energy Storage
+* **Battery Chemistry:** Lithium Iron Phosphate ($\text{LiFePO}_4$ / LFP) 32700 cylindrical cells arranged in a $15\text{S}2\text{P}$ configuration ($48\text{ V}$, $10\text{ Ah}$, $480\text{ Wh}$ per sled pack).
+* **Workday Energy Management:** Dual hot-swappable battery sled architecture ($960\text{ Wh}$ combined capacity) paired with a $200\text{ W}$ solar micro-grid canopy trailer for continuous 8–10+ hour field workday operations.
+* **Battery Protection:** Integrated 15S 30A Smart BMS (Battery Management System) with over-current, under-voltage, short-circuit, and thermal cutoff protections.
+
+### 14.4 Layer 4: Embedded Control Systems & Firmware
+* **Microcontroller Unit (MCU):** 32-bit dual-core ESP32 or STM32 running FreeRTOS at $240\text{ MHz}$.
+* **Software Traction Control:** Closed-loop PID electronic differential algorithm executing real-time torque vectoring based on dual Hall-effect motor speed sensors.
+* **Operator Control Interface:** Variable thumb throttle, LCD state-of-charge gauge, mechanical cable disc brake levers, IP65 waterproof housing, and magnetic safety wrist-tether kill-switch.
+* **Implement Positioning:** Hall-effect magnetic indexing switches and electromagnetic latching solenoids for rapid ($<50\text{ ms}$) implement depth positioning.
+
+### 14.5 Layer 5: Software Simulation & Open-Source Fabrication
+* **Physics & Economic Engine:** `simulator.py` (Python 3) implementing first-principles terramechanics (Mohr-Coulomb shear, Janosi-Hanamoto slip) and full BOM cost modeling.
+* **Fab-Lab Digital Blueprints:** Open-source 2D DXF/3D STEP CAD templates for local CNC plasma/laser cutting and blacksmith fabrication.
+* **Guidance & Navigation:** Semi-autonomous field-edge cable guidance with magnetic limit switches for automatic row-end $180^\circ$ pivoting.
+
+---
+
 ### Interactive Simulation, Demonstrations, and Visual Imagery
 
 To complement this engineering report, the repository includes a fully-interactive, first-principles **MVAM Simulator (`simulator.py`)** with rich text-based visualization schematics and real-time traction curve plotting.
