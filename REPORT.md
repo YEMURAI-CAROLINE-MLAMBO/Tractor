@@ -1,6 +1,7 @@
 # Engineering Investigation: Toy-Tractor-Inspired Minimum Viable Agricultural Machine (MVAM)
 
 **Author:** Jules, Software & Systems Engineer
+**Intellectual Property Notice:** Intellectual property belongs to Yemurai Caroline Mlambo. All Rights Reserved.
 **Status:** Completed Engineering Investigation & Computational Physical Model Verification
 **Target Unit Production Cost (BOM):** Under $500 USD
 **Primary Design Reference:** Toy-Tractor Physical Architecture (Chassis, Four Wheels, Axles, Basic Steering, Simple Rear Pull-Hitch)
@@ -740,29 +741,33 @@ python3 simulator.py
 #### Visual Outputs Rendered by the Simulator:
 
 ##### 1. Physical Layout Schematic (Visual Architecture Representation)
-The simulator renders a complete structural diagram of our toy-tractor-derived machine architecture, showing the integration of the modular battery sled, dual mid-drive motors, and universal quick-pin implement hitch:
+The simulator renders a complete structural diagram of our toy-tractor-derived machine architecture, showing the integration of the dual hot-swappable 960Wh LFP battery sled, 200W solar canopy trailer, dual mid-drive motors, steel cleated lug wheels, and universal quick-pin implement hitch:
 
 ```
              =================== MVAM PHYSICAL ARCHITECTURE SCHEMATIC ===================
 
-                     [Handlebars]
-                           \     /
-                            \___/
-                              |
-                              |               (Removable 48V Sled Battery Pack)
-               _______________|_______________           [==BATTERY==]
-              |   [LFP Battery & Dual BLDC    |                |
-              |   Sensing Controller Sled]    | <──────────────┘
+                                [Solar Canopy Micro-Grid Trailer (200W)]
+                                  ┌───────────────────────────────┐
+                                  │   [ 200W Solar Panel Array ]  │
+                                  └───────────────┬───────────────┘
+                                                  │ Trickle Charging
+                     [Handlebars]                 ▼
+                           \     /    (Dual Hot-Swappable 48V Sled Battery Packs)
+                            \___/            [==BATTERY A==]   [==BATTERY B==]
+                              |                     │                 │
+               _______________|_______________      └────────┬────────┘
+              |   [LFP Dual Sled & BLDC       |              │
+              |   Sensing Controller Deck]    | <────────────┘
               |_______________________________|
                  |                         |
                  |                         |
             [Front Caster]             [Rear Drive Wheel]  ◄── Driven by Dual 250W Motors
-               (Passive)                 (Active V-Lug)
+             (or Steel Rim)             (Active Steel Lug / V-Rim)
                  O====O                    O===========O
                 (______)                  (_____________)
                   |                             |
                   |                             |
-             =====O=============================O==============[Universal Tool Hitch Receiver]
+             =====O=============================O==============[Cow & Yoke Line-of-Draft Hitch]
                                                                         |
                                                                         V
                                                             [Quick-Pin Implement Hitch]

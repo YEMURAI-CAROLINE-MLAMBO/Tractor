@@ -3,6 +3,8 @@
 Toy-Tractor-Inspired Affordable Farming Machine
 Physical and Economic Simulation Model (MVAM Simulator)
 
+Intellectual property belongs to Yemurai Caroline Mlambo. All Rights Reserved.
+
 This simulator implements first-principles physics and cost modeling for a
 Minimum Viable Agricultural Machine (MVAM) designed to meet a $500 cost target.
 It computes soil-tire interactions, drawbar pull, slip, power requirements,
@@ -366,24 +368,28 @@ def print_chassis_schematic():
     print("""
              =================== MVAM PHYSICAL ARCHITECTURE SCHEMATIC ===================
 
-                     [Handlebars]
-                           \\     /
-                            \\___/
-                              |
-                              |               (Removable 48V Sled Battery Pack)
-               _______________|_______________           [==BATTERY==]
-              |   [LFP Battery & Dual BLDC    |                |
-              |   Sensing Controller Sled]    | <──────────────┘
+                                [Solar Canopy Micro-Grid Trailer (200W)]
+                                  ┌───────────────────────────────┐
+                                  │   [ 200W Solar Panel Array ]  │
+                                  └───────────────┬───────────────┘
+                                                  │ Trickle Charging
+                     [Handlebars]                 ▼
+                           \\     /    (Dual Hot-Swappable 48V Sled Battery Packs)
+                            \\___/            [==BATTERY A==]   [==BATTERY B==]
+                              |                     │                 │
+               _______________|_______________      └────────┬────────┘
+              |   [LFP Dual Sled & BLDC       |              │
+              |   Sensing Controller Deck]    | <────────────┘
               |_______________________________|
                  |                         |
                  |                         |
             [Front Caster]             [Rear Drive Wheel]  ◄── Driven by Dual 250W Motors
-               (Passive)                 (Active V-Lug)
+             (or Steel Rim)             (Active Steel Lug / V-Rim)
                  O====O                    O===========O
                 (______)                  (_____________)
                   |                             |
                   |                             |
-             =====O=============================O==============[Universal Tool Hitch Receiver]
+             =====O=============================O==============[Cow & Yoke Line-of-Draft Hitch]
                                                                         |
                                                                         V
                                                             [Quick-Pin Implement Hitch]
