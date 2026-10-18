@@ -365,35 +365,34 @@ def run_simulation(specs, soil_key, arch_key, draft_force_n):
 
 # --- CHARACTERS FOR VISUAL SCHEMATICS AND DEMONSTRATIONS ---
 def print_chassis_schematic():
-    print("""
+    print(r"""
              =================== MVAM PHYSICAL ARCHITECTURE SCHEMATIC ===================
 
-                                [Solar Canopy Micro-Grid Trailer (200W)]
-                                  ┌───────────────────────────────┐
-                                  │   [ 200W Solar Panel Array ]  │
-                                  └───────────────┬───────────────┘
-                                                  │ Trickle Charging
-                     [Handlebars]                 ▼
-                           \\     /    (Dual Hot-Swappable 48V Sled Battery Packs)
-                            \\___/            [==BATTERY A==]   [==BATTERY B==]
-                              |                     │                 │
-               _______________|_______________      └────────┬────────┘
-              |   [LFP Dual Sled & BLDC       |              │
-              |   Sensing Controller Deck]    | <────────────┘
-              |_______________________________|
-                 |                         |
-                 |                         |
-            [Front Caster]             [Rear Drive Wheel]  ◄── Driven by Dual 250W Motors
-             (or Steel Rim)             (Active Steel Lug / V-Rim)
-                 O====O                    O===========O
-                (______)                  (_____________)
-                  |                             |
-                  |                             |
-             =====O=============================O==============[Cow & Yoke Line-of-Draft Hitch]
-                                                                        |
-                                                                        V
-                                                            [Quick-Pin Implement Hitch]
-                                                                  (Weeder / Seeder / Sulky)
+  [Front Quick-Attach Receiver]                 [Solar Canopy Micro-Grid Trailer (200W)]
+    (Trash Wheels / PTO Weeder)                   ┌───────────────────────────────┐
+            │                                     │   [ 200W Solar Panel Array ]  │
+            ▼                                     └───────────────┬───────────────┘
+  ┌──────────────────┐                                            │ Trickle Charging
+  │ [Front Brush Guard│      [Handlebars]                         ▼
+  │  & 10W LED Light]│        \     /         (Dual Hot-Swappable 48V Sled Battery Packs)
+  └─────────┬────────┘         \___/                 [==BATTERY A==]   [==BATTERY B==]
+            │                    |                          │                 │
+            └─────────┐   _______|_______                   └────────┬────────┘
+                      ▼  |  [LFP Dual Sled  |                            │
+                     ====|   & Controller]  | <──────────────────────────┘
+                         |__________________|
+                            |            |
+                            |            |
+                       [Front Caster]  [Rear Drive Wheel] ◄── Driven by Dual 250W Motors
+                       (or Steel Rim)  (Active Steel Lug / V-Rim)
+                           O====O         O===========O
+                          (______)       (_____________)
+                            |                   |
+                       =====O===================O========[Cow & Yoke Line-of-Draft Hitch]
+                                                                  |
+                                                                  V
+                                                      [Quick-Pin Implement Hitch]
+                                                            (Weeder / Seeder / Sulky)
     """)
 
 def plot_traction_curve(specs, soil_key):

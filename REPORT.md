@@ -397,6 +397,41 @@ The MVAM is optimized for complete single-person management, avoiding complex me
 *   **Balance & Ground Pivot Point:** Axle placement is located precisely under the center of mass of the walk-behind power platform. This allows the operator to pivot the entire machine $180^\circ$ at the end of a row with less than $5 \text{ kg}$ of lifting force on the handlebars.
 *   **Dual Hot-Swappable Battery Sled & Solar Canopy System:** To achieve a realistic **8–10 hour continuous full-workday capability** (overcoming the limitations of a single 2-hour battery pack), the MVAM utilizes a **dual 48V 10Ah LFP battery sled architecture (960 Wh combined storage)** paired with an optional **200W solar micro-grid canopy trailer**. While Pack A powers the drive motors in the field, Pack B charges on the solar trailer or homestead charger, enabling hot-swaps in under 30 seconds.
 
+### 7.2 Front Accessory Interface & Functional Implements Suite
+
+In conventional tractors, the front end is often underutilized or restricted to dead ballast weights. For our low-cost MVAM specification, the front architecture is designed with a **Universal Front Quick-Attach Receiver Tube ($25\text{ mm} \times 25\text{ mm}$ square receiver)** and a $48\text{ V}$ auxiliary power plug, enabling multiple essential front-mounted accessories:
+
+```
+       [ UNIVERSAL FRONT ACCESSORY MOUNTING INTERFACE ]
+
+       ┌────────────────────────────────────────────────────────┐
+       │ Front Steel Brush Guard & LED Field Headlamp           │
+       └───────────────────────────┬────────────────────────────┘
+                                   │
+                                   ▼
+       ┌────────────────────────────────────────────────────────┐
+       │ Universal Front Receiver & Auxiliary 48V PTO Plug       │
+       └─────┬─────────────────────┬──────────────────────┬─────┘
+             │                     │                      │
+             ▼                     ▼                      ▼
+  [Dynamic Front Ballast]  [Crop Residue Wheels]  [Rotary Weeding Brush]
+  (Front Battery Mount)    (Trash Clearing)       (Front Electric PTO)
+```
+
+#### A. Dynamic Front Ballast & Forward Battery Mount
+* **Function:** During heavy rear draft pulling (e.g. deep cultivation), rear hitch torque tends to lift the front casters. Mounting the primary battery sled or auxiliary tool box on the front receiver acts as a dynamic forward counterweight, maintaining front caster steering control without adding unpowered dead mass.
+
+#### B. Crop Residue & Trash Clearing Wheels
+* **Function:** Mounted ahead of the front drive wheels, floating angled steel coulters/trash wheels clear corn stalks, crop stubble, and rocks out of the tire track. This prevents tire puncture, reduces rolling resistance ($f_r$ drops from $0.08$ to $0.05$), and prevents mud buildup on the main chassis.
+
+#### C. Front Active Electrical PTO Attachments
+* **Function:** Utilizing the $48\text{ V}$ waterproof front electrical PTO port, the operator can attach:
+  1. **Front Rotary Weeding Brush:** A high-speed rotating wire/nylon brush powered by a $150\text{ W}$ auxiliary motor that shaves weeds along row edges before the rear tires pass over them.
+  2. **Front Flail / Grass Mower:** A lightweight rotary cutter that clears heavy cover crop ahead of row planting.
+
+#### D. Front Structural Brush Guard & Night-Work LED Lighting
+* **Function:** A tubular steel bumper integrated into the front chassis frame protects the polymer hood from tree branches and crop impacts. It houses a $10\text{ W}$ high-efficiency LED field headlamp, allowing smallholder farmers to operate during cool early-morning or evening hours.
+
 ---
 
 ## 8. Modularity as a Power Platform
